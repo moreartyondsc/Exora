@@ -1,0 +1,4 @@
+bcrypt==3.2.0
+mysql-connector-python==8.0.26
+pydub==0.25.1
+yt-dlp==2021.6.6
