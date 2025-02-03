@@ -10,11 +10,11 @@ import os
 import yt_dlp
 
 # Connexion à la base de données
-hostname = "job8o.h.filess.io"
-database = "Pyproject_topartymy"
-port = "3307"
-username = "Pyproject_topartymy"
-password = "a367f3ec285ee0e227faab60c7e869f430411f65"
+hostname = "|"
+database = "|"
+port = "|"
+username = "|"
+password = "|"
 
 def connect_to_database():
     try:
