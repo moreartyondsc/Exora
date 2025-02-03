@@ -8,13 +8,17 @@ from pydub import AudioSegment
 from pydub.playback import play
 import os
 import yt_dlp
+import json
 
-# Connexion à la base de données
-hostname = "|"
-database = "|"
-port = "|"
-username = "|"
-password = "|"
+# Informations de connexion à la base de données
+with open('config.json', 'r') as file:
+    config = json.load(file)
+
+hostname = config['hostname']
+username = config['username']
+password = config['password']
+database = config['database']
+port = config['port']
 
 def connect_to_database():
     try:
