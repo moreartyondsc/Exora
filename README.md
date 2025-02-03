@@ -66,6 +66,23 @@ pip install mysql-connector-python bcrypt pygame yt-dlp
          "password": "votre_password"
      }
      ```
+4. **Créer votre table `users`** :
+   
+   ```sql
+   CREATE TABLE "users" (
+  "id" int(11) NOT NULL,
+  "username" varchar(250) NOT NULL,
+  "password" varchar(250) NOT NULL,
+  "playlist" longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE "users"
+  ADD PRIMARY KEY ("id");
+
+ALTER TABLE "users"
+  MODIFY "id" int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+   ```
 
 4. **Exécuter l'application** :
    ```sh
