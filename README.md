@@ -1,10 +1,10 @@
 # Exora Music
 
-Exora Music est une application de gestion et de lecture de musique qui permet aux utilisateurs de créer des comptes, de gérer leurs playlists, et de lire des fichiers MP3 ou des vidéos YouTube.
+Exora Music est une application de gestion et de lecture de musique permettant aux utilisateurs de créer des comptes, de gérer leurs playlists et d’écouter des fichiers MP3 ou des vidéos YouTube.
 
 ## Objectif
 
-L'objectif de ce projet est de fournir une application de bureau simple et conviviale pour la gestion et la lecture de musique. Les utilisateurs peuvent créer des comptes, ajouter des fichiers MP3 ou des liens YouTube à leurs playlists, et lire leurs chansons préférées.
+L'objectif de ce projet est de fournir une application de bureau simple et conviviale pour la gestion et la lecture de musique. Les utilisateurs peuvent créer des comptes, ajouter des fichiers MP3 ou des liens YouTube à leurs playlists et écouter leurs chansons préférées.
 
 ## Fonctionnalités
 
@@ -13,8 +13,8 @@ L'objectif de ce projet est de fournir une application de bureau simple et convi
 - Ajout de fichiers MP3 à la playlist
 - Ajout de liens YouTube à la playlist
 - Lecture des chansons de la playlist
-- Contrôles de lecture (play, pause, skip, back)
-- Options de lecture (aléatoire, répéter, boucle)
+- Contrôles de lecture (lecture, pause, suivant, précédent)
+- Options de lecture (aléatoire, répétition, boucle)
 
 ## Index du Projet
 
@@ -29,13 +29,13 @@ L'objectif de ce projet est de fournir une application de bureau simple et convi
 
 Pour exécuter ce projet, vous aurez besoin des bibliothèques suivantes :
 
-- `tkinter` : Pour l'interface utilisateur graphique
-- `mysql-connector-python` : Pour la connexion à la base de données MySQL
-- `bcrypt` : Pour le hachage des mots de passe
-- `pygame` : Pour la gestion et la lecture des fichiers audio
-- `yt-dlp` : Pour le téléchargement et l'extraction des informations des vidéos YouTube
+- `tkinter` : pour l'interface utilisateur graphique
+- `mysql-connector-python` : pour la connexion à la base de données MySQL
+- `bcrypt` : pour le hachage des mots de passe
+- `pygame` : pour la gestion et la lecture des fichiers audio
+- `yt-dlp` : pour le téléchargement et l'extraction des informations des vidéos YouTube
 
-Vous pouvez installer ces bibliothèques en utilisant `pip` :
+Vous pouvez installer ces bibliothèques avec `pip` :
 
 ```sh
 pip install mysql-connector-python bcrypt pygame yt-dlp
@@ -56,7 +56,7 @@ pip install mysql-connector-python bcrypt pygame yt-dlp
 
 3. **Configurer la base de données** :
    - Créez une base de données MySQL et un utilisateur avec les privilèges nécessaires.
-   - Configurez les informations de connexion à la base de données dans le fichier `config.json` :
+   - Configurez les informations de connexion dans le fichier `config.json` :
      ```json
      {
          "hostname": "votre_hostname",
@@ -66,25 +66,20 @@ pip install mysql-connector-python bcrypt pygame yt-dlp
          "password": "votre_password"
      }
      ```
-4. **Créer votre table `users`** :
+
+4. **Créer la table `users`** :
    
    ```sql
-   CREATE TABLE "users" (
-  "id" int(11) NOT NULL,
-  "username" varchar(250) NOT NULL,
-  "password" varchar(250) NOT NULL,
-  "playlist" longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-ALTER TABLE "users"
-  ADD PRIMARY KEY ("id");
-
-ALTER TABLE "users"
-  MODIFY "id" int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
+   CREATE TABLE users (
+     id INT(11) NOT NULL AUTO_INCREMENT,
+     username VARCHAR(250) NOT NULL,
+     password VARCHAR(250) NOT NULL,
+     playlist LONGTEXT NOT NULL,
+     PRIMARY KEY (id)
+   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
    ```
 
-4. **Exécuter l'application** :
+5. **Exécuter l'application** :
    ```sh
    python index.py
    ```
@@ -93,28 +88,28 @@ COMMIT;
 
 1. **Création de compte** :
    - Lancez l'application et cliquez sur "Créer un compte".
-   - Entrez un nom d'utilisateur et un mot de passe, puis cliquez sur "Créer".
+   - Saisissez un nom d'utilisateur et un mot de passe, puis cliquez sur "Créer".
 
 2. **Connexion** :
    - Entrez votre nom d'utilisateur et votre mot de passe, puis cliquez sur "Connexion".
 
 3. **Gestion de la playlist** :
-   - Ajoutez des fichiers MP3 ou des liens YouTube à votre playlist en utilisant les boutons correspondants.
+   - Ajoutez des fichiers MP3 ou des liens YouTube à votre playlist via les boutons correspondants.
    - Cliquez sur une chanson dans la playlist pour la lire.
 
 4. **Contrôles de lecture** :
-   - Utilisez les boutons "Play", "Pause", "Skip", et "Back" pour contrôler la lecture des chansons.
-   - Activez les options de lecture (aléatoire, répéter, boucle) selon vos préférences.
+   - Utilisez les boutons "Lecture", "Pause", "Suivant" et "Précédent" pour contrôler la lecture.
+   - Activez les options de lecture (aléatoire, répétition, boucle) selon vos préférences.
 
 ## Contribution
 
-Les contributions sont les bienvenues ! Si vous souhaitez contribuer à ce projet, veuillez suivre ces étapes :
+Les contributions sont les bienvenues ! Pour contribuer :
 
-1. Forker le dépôt.
-2. Créer une nouvelle branche (`git checkout -b feature-branch-name`).
-3. Committer vos modifications (`git commit -am 'Add some feature'`).
-4. Pusher la branche (`git push origin feature-branch-name`).
-5. Créer une Pull Request.
+1. Forkez le dépôt.
+2. Créez une nouvelle branche (`git checkout -b feature-branch-name`).
+3. Effectuez vos modifications et committez-les (`git commit -am 'Ajout d'une fonctionnalité'`).
+4. Poussez la branche (`git push origin feature-branch-name`).
+5. Ouvrez une Pull Request.
 
 ## Licence
 
@@ -122,4 +117,4 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 ## Contact
 
-Pour toute question ou suggestion, veuillez contacter [odevs.contact@gmail.com](mailto:odevs.contact@gmail.com).
+Pour toute question ou suggestion, contactez [odevs.contact@gmail.com](mailto:odevs.contact@gmail.com).
