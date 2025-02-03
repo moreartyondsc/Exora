@@ -16,13 +16,14 @@ L'objectif de ce projet est de fournir une application de bureau simple et convi
 - Contrôles de lecture (play, pause, skip, back)
 - Options de lecture (aléatoire, répéter, boucle)
 
-## Index projet
+## Index du Projet
+
 - [README.md](https://github.com/moreartyondsc/Exora/blob/main/README.md)
 - [CHANGELOG.md](https://github.com/moreartyondsc/Exora/blob/main/CHANGELOG.md)
 - [CODE_OF_CONDUCT.md](https://github.com/moreartyondsc/Exora/blob/main/CODE_OF_CONDUCT.md)
 - [CONTRIBUTING.md](https://github.com/moreartyondsc/Exora/blob/main/CONTRIBUTING.md)
 - [LICENSE.md](https://github.com/moreartyondsc/Exora/blob/main/LICENSE.md)
-- [SECURITY.md](https://github.com/moreartyondsc/Exora/blob/main/SECURITY.md) 
+- [SECURITY.md](https://github.com/moreartyondsc/Exora/blob/main/SECURITY.md)
 
 ## Bibliothèques Nécessaires
 
@@ -31,21 +32,21 @@ Pour exécuter ce projet, vous aurez besoin des bibliothèques suivantes :
 - `tkinter` : Pour l'interface utilisateur graphique
 - `mysql-connector-python` : Pour la connexion à la base de données MySQL
 - `bcrypt` : Pour le hachage des mots de passe
-- `pydub` : Pour la gestion et la lecture des fichiers audio
+- `pygame` : Pour la gestion et la lecture des fichiers audio
 - `yt-dlp` : Pour le téléchargement et l'extraction des informations des vidéos YouTube
 
 Vous pouvez installer ces bibliothèques en utilisant `pip` :
 
 ```sh
-pip install mysql-connector-python bcrypt pydub yt-dlp
+pip install mysql-connector-python bcrypt pygame yt-dlp
 ```
 
 ## Processus d'Installation
 
 1. **Cloner le dépôt** :
    ```sh
-   git clone https://github.com/moreartyondsc/exora.git
-   cd exora-music
+   git clone https://github.com/moreartyondsc/Exora.git
+   cd Exora
    ```
 
 2. **Installer les dépendances** :
@@ -105,6 +106,3 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 ## Contact
 
 Pour toute question ou suggestion, veuillez contacter [odevs.contact@gmail.com](mailto:odevs.contact@gmail.com).
-
-
-Vous pouvez copier et coller ce contenu dans un fichier nommé `README.md` dans le répertoire racine de votre projet. Assurez-vous de remplacer `https://github.com/votre-utilisateur/exora-music.git` par l'URL de votre dépôt GitHub et `votre-email@example.com` par votre adresse e-mail de contact.
