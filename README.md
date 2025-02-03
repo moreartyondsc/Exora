@@ -16,6 +16,14 @@ L'objectif de ce projet est de fournir une application de bureau simple et convi
 - Contrôles de lecture (play, pause, skip, back)
 - Options de lecture (aléatoire, répéter, boucle)
 
+## Index projet
+- [README.md](https://github.com/moreartyondsc/Exora/blob/main/README.md)
+- [CHANGELOG.md](https://github.com/moreartyondsc/Exora/blob/main/CHANGELOG.md)
+- [CODE_OF_CONDUCT.md](https://github.com/moreartyondsc/Exora/blob/main/CODE_OF_CONDUCT.md)
+- [CONTRIBUTING.md](https://github.com/moreartyondsc/Exora/blob/main/CONTRIBUTING.md)
+- [LICENSE.md](https://github.com/moreartyondsc/Exora/blob/main/LICENSE.md)
+- [SECURITY.md](https://github.com/moreartyondsc/Exora/blob/main/SECURITY.md) 
+
 ## Bibliothèques Nécessaires
 
 Pour exécuter ce projet, vous aurez besoin des bibliothèques suivantes :
