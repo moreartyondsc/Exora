@@ -76,18 +76,19 @@ def create_account():
     create_account_window.title("Créer un compte")
     create_account_window.geometry("400x250")
     create_account_window.resizable(False, False)
+    create_account_window.iconbitmap("exora.ico")
 
     # Widgets de la fenêtre de création de compte
-    tk.Label(create_account_window, text="Nom d'utilisateur:").pack(pady=5)
-    entry_new_username = tk.Entry(create_account_window)
+    tk.Label(create_account_window, text="Nom d'utilisateur:", bg="#1E1E2E", fg="white").pack(pady=5)
+    entry_new_username = tk.Entry(create_account_window, bg="#33334E", fg="white")
     entry_new_username.pack(pady=5)
 
-    tk.Label(create_account_window, text="Mot de passe:").pack(pady=5)
-    entry_new_password = tk.Entry(create_account_window, show="*")
+    tk.Label(create_account_window, text="Mot de passe:", bg="#1E1E2E", fg="white").pack(pady=5)
+    entry_new_password = tk.Entry(create_account_window, show="*", bg="#33334E", fg="white")
     entry_new_password.pack(pady=5)
 
-    tk.Button(create_account_window, text="Créer", command=lambda: create_user(entry_new_username.get(), entry_new_password.get(), create_account_window)).pack(pady=20)
-    tk.Button(create_account_window, text="Retour à la connexion", command=lambda: show_login(create_account_window)).pack(pady=5)
+    tk.Button(create_account_window, text="Créer", command=lambda: create_user(entry_new_username.get(), entry_new_password.get(), create_account_window), bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(pady=20)
+    tk.Button(create_account_window, text="Retour à la connexion", command=lambda: show_login(create_account_window), bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(pady=5)
 
 # Fonction pour créer un nouvel utilisateur
 def create_user(username, password, create_account_window):
@@ -118,69 +119,73 @@ def show_login(window):
 
 # Fonction pour la fenêtre principale de l'application
 def main_window(username):
-    global current_playlist, current_index, play_thread, is_paused
+    global current_playlist, current_index, play_thread, is_paused, current_pos, label_current_song
     current_playlist = []
     current_index = 0
     play_thread = None
     is_paused = False
+    current_pos = 0
 
     main_window_page = tk.Toplevel(root)
     main_window_page.title("Exora Music")
     main_window_page.geometry("1000x600")
     main_window_page.resizable(True, True)
     main_window_page.minsize(800, 600)
+    main_window_page.configure(bg="#1E1E2E")
+    main_window_page.iconbitmap("exora.ico")
 
     # Bandeau de titre + connexion
-    title_frame = tk.Frame(main_window_page, bg="blue", height=50)
+    title_frame = tk.Frame(main_window_page, bg="#1E1E2E", height=50)
     title_frame.pack(fill=tk.X, side=tk.TOP)
 
-    tk.Label(title_frame, text="Exora Music", font=("Arial", 24), bg="blue", fg="white").pack(side=tk.LEFT, padx=10)
-    tk.Label(title_frame, text=f"Connecté en tant que: {username}", font=("Arial", 14), bg="blue", fg="white").pack(side=tk.LEFT, padx=10)
-    tk.Button(title_frame, text="Déconnexion", command=lambda: show_login(main_window_page)).pack(side=tk.RIGHT, padx=10)
+    tk.Label(title_frame, text="Exora Music", font=("Arial", 24), bg="#1E1E2E", fg="white").pack(side=tk.LEFT, padx=10)
+    tk.Label(title_frame, text=f"Connecté en tant que: {username}", font=("Arial", 14), bg="#1E1E2E", fg="white").pack(side=tk.LEFT, padx=10)
+    tk.Button(title_frame, text="Déconnexion", command=lambda: show_login(main_window_page), bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(side=tk.RIGHT, padx=10)
 
     # Cadre de la playlist
-    playlist_frame = tk.Frame(main_window_page, bg="lightgrey", width=300)
+    playlist_frame = tk.Frame(main_window_page, bg="#33334E", width=300)
     playlist_frame.pack(fill=tk.Y, side=tk.LEFT)
 
-    tk.Label(playlist_frame, text="Playlist", font=("Arial", 16), bg="lightgrey").pack(pady=10)
+    tk.Label(playlist_frame, text="Playlist", font=("Arial", 16), bg="#33334E", fg="white").pack(pady=10)
+
+    # Utilisation d'une Listbox pour la playlist
+    playlist_listbox = tk.Listbox(playlist_frame, bg="#33334E", fg="white", width=25, height=20, selectmode=tk.SINGLE)
+    playlist_listbox.pack(fill=tk.BOTH, expand=True, pady=10)
+
+    # Lier l'événement de sélection à la fonction play_selected_song
+    playlist_listbox.bind('<<ListboxSelect>>', lambda event: play_selected_song(username, label_current_song, playlist_listbox))
 
     # Cadre pour ajouter un nouveau son
-    add_song_frame = tk.Frame(main_window_page, bg="lightgrey", width=300)
+    add_song_frame = tk.Frame(main_window_page, bg="#33334E", width=300)
     add_song_frame.pack(fill=tk.Y, side=tk.RIGHT)
 
-    tk.Label(add_song_frame, text="Ajouter un son", font=("Arial", 16), bg="lightgrey").pack(pady=10)
-    tk.Button(add_song_frame, text="Ajouter un fichier MP3", command=lambda: add_mp3_song(username, playlist_frame, main_window_page, label_current_song)).pack(pady=5)
-    tk.Button(add_song_frame, text="Ajouter un lien YouTube", command=lambda: add_youtube_song(username, playlist_frame, main_window_page, label_current_song)).pack(pady=5)
+    tk.Label(add_song_frame, text="Ajouter un son", font=("Arial", 16), bg="#33334E", fg="white").pack(pady=10)
+    tk.Button(add_song_frame, text="Ajouter un lien YouTube", command=lambda: add_youtube_song(username, playlist_listbox, main_window_page, label_current_song), bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(pady=5)
 
     # Cadre pour le lecteur de musique
-    player_frame = tk.Frame(main_window_page, bg="lightgrey", height=100)
+    player_frame = tk.Frame(main_window_page, bg="#33334E", height=100)
     player_frame.pack(fill=tk.X, side=tk.BOTTOM)
 
-    label_current_song = tk.Label(player_frame, text="Aucune musique en lecture", font=("Arial", 14), bg="lightgrey")
+    label_current_song = tk.Label(player_frame, text="Aucune musique en lecture", font=("Arial", 14), bg="#33334E", fg="white")
     label_current_song.pack(pady=10)
 
-    tk.Button(player_frame, text="Play", command=lambda: play_song(username, label_current_song)).pack(side=tk.LEFT, padx=5)
-    tk.Button(player_frame, text="Pause", command=pause_song).pack(side=tk.LEFT, padx=5)
-    tk.Button(player_frame, text="Skip", command=skip_song).pack(side=tk.LEFT, padx=5)
-    tk.Button(player_frame, text="Back", command=back_song).pack(side=tk.LEFT, padx=5)
+    tk.Button(player_frame, text="Play", command=lambda: play_song(username, label_current_song), bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(side=tk.LEFT, padx=5)
+    tk.Button(player_frame, text="Pause", command=pause_song, bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(side=tk.LEFT, padx=5)
+    tk.Button(player_frame, text="Skip", command=lambda: skip_song(username, label_current_song), bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(side=tk.LEFT, padx=5)
+    tk.Button(player_frame, text="Back", command=lambda: back_song(username, label_current_song), bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(side=tk.LEFT, padx=5)
+    tk.Button(player_frame, text="Actualiser", command=lambda: show_playlist(main_window_page, playlist_listbox, username, label_current_song), bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(side=tk.LEFT, padx=5)
 
     # Options de lecture
-    options_frame = tk.Frame(player_frame, bg="lightgrey")
+    options_frame = tk.Frame(player_frame, bg="#33334E")
     options_frame.pack(side=tk.RIGHT, padx=10)
+    
+    show_playlist(main_window_page, playlist_listbox, username, label_current_song)
 
-    var_shuffle = tk.BooleanVar()
-    tk.Checkbutton(options_frame, text="Aléatoire", variable=var_shuffle, bg="lightgrey").pack(side=tk.LEFT, padx=5)
-
-    var_repeat = tk.BooleanVar()
-    tk.Checkbutton(options_frame, text="Répéter", variable=var_repeat, bg="lightgrey").pack(side=tk.LEFT, padx=5)
-
-    var_loop = tk.BooleanVar()
-    tk.Checkbutton(options_frame, text="Boucle", variable=var_loop, bg="lightgrey").pack(side=tk.LEFT, padx=5)
-
-    show_playlist(main_window_page, playlist_frame, username, label_current_song)
-
-def show_playlist(main_window_page, playlist_frame, username, label_current_song):
+def show_playlist(main_window_page, playlist_listbox, username, label_current_song):
     global current_playlist
+    # Supprimer les éléments existants dans la Listbox
+    playlist_listbox.delete(0, tk.END)
+
     exora_dir = get_exora_directory()
     if not os.path.exists(exora_dir):
         os.makedirs(exora_dir)
@@ -192,27 +197,15 @@ def show_playlist(main_window_page, playlist_frame, username, label_current_song
         if filename.endswith(".mp3"):
             song_name = os.path.splitext(filename)[0]
             current_playlist.append(os.path.join(exora_dir, filename))
-            tk.Button(playlist_frame, text=song_name, font=("Arial", 12), bg="lightgrey", command=lambda url=os.path.join(exora_dir, filename): play_song(username, label_current_song, url)).pack(pady=2)
+            # Tronquer le nom de la chanson à 25 caractères
+            truncated_song_name = song_name[:25]
+            playlist_listbox.insert(tk.END, truncated_song_name)
 
 def get_exora_directory():
     home_dir = os.path.expanduser("~")
     return os.path.join(home_dir, "exora")
 
-def add_mp3_song(username, playlist_frame, main_window_page, label_current_song):
-    file_path = filedialog.askopenfilename(filetypes=[("MP3 files", "*.mp3")])
-    if file_path:
-        exora_dir = get_exora_directory()
-        song_name = os.path.basename(file_path)
-        destination_path = os.path.join(exora_dir, song_name)
-
-        if os.path.exists(destination_path):
-            messagebox.showinfo("Ajout de son", "Le fichier existe déjà dans la playlist.")
-        else:
-            os.rename(file_path, destination_path)
-            messagebox.showinfo("Ajout de son", "Son ajouté avec succès!")
-            show_playlist(main_window_page, playlist_frame, username, label_current_song)
-
-def add_youtube_song(username, playlist_frame, main_window_page, label_current_song):
+def add_youtube_song(username, playlist_listbox, main_window_page, label_current_song):
     youtube_url = simpledialog.askstring("Ajouter un lien YouTube", "Entrez le lien YouTube:")
     if youtube_url:
         ydl_opts = {
@@ -239,15 +232,15 @@ def add_youtube_song(username, playlist_frame, main_window_page, label_current_s
                 messagebox.showinfo("Ajout de son", "Le fichier existe déjà dans la playlist.")
             else:
                 messagebox.showinfo("Ajout de son", "Son ajouté avec succès!")
-                show_playlist(main_window_page, playlist_frame, username, label_current_song)
+                show_playlist(main_window_page, playlist_listbox, username, label_current_song)
 
 def play_song(username, label_current_song, url=None):
-    global current_index, play_thread, is_paused
+    global current_index, play_thread, is_paused, current_pos
 
     def play_audio(url):
-        global is_paused
+        global is_paused, current_pos
         pygame.mixer.music.load(url)
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(start=current_pos / 1000.0)
         is_paused = False
 
     if url:
@@ -265,28 +258,40 @@ def play_song(username, label_current_song, url=None):
     play_thread = threading.Thread(target=play_audio, args=(url,))
     play_thread.start()
 
+def play_selected_song(username, label_current_song, playlist_listbox):
+    selected_index = playlist_listbox.curselection()
+    if selected_index:
+        selected_index = selected_index[0]
+        url = current_playlist[selected_index]
+        play_song(username, label_current_song, url)
+
 def pause_song():
-    global is_paused
+    global is_paused, current_pos
     if pygame.mixer.music.get_busy():
         if is_paused:
             pygame.mixer.music.unpause()
         else:
+            current_pos = pygame.mixer.music.get_pos()
             pygame.mixer.music.pause()
         is_paused = not is_paused
 
-def skip_song():
-    global current_index
+def skip_song(username, label_current_song):
+    global current_index, current_pos
+    current_pos = 0
     if current_index < len(current_playlist) - 1:
         current_index += 1
-        play_song(None, None)
+        pygame.mixer.music.stop()
+        play_song(username, label_current_song)
     else:
         messagebox.showinfo("Lecture", "Aucune musique suivante.")
 
-def back_song():
-    global current_index
+def back_song(username, label_current_song):
+    global current_index, current_pos
+    current_pos = 0
     if current_index > 0:
         current_index -= 1
-        play_song(None, None)
+        pygame.mixer.music.stop()
+        play_song(username, label_current_song)
     else:
         messagebox.showinfo("Lecture", "Aucune musique précédente.")
 
@@ -295,18 +300,20 @@ root = tk.Tk()
 root.title("Connexion")
 root.geometry("400x250")
 root.resizable(False, False)
+root.configure(bg="#1E1E2E")
+root.iconbitmap("exora.ico")
 
 # Widgets de la fenêtre de connexion
-tk.Label(root, text="Nom d'utilisateur:").pack(pady=5)
-entry_username = tk.Entry(root)
+tk.Label(root, text="Nom d'utilisateur:", bg="#1E1E2E", fg="white").pack(pady=5)
+entry_username = tk.Entry(root, bg="#33334E", fg="white")
 entry_username.pack(pady=5)
 
-tk.Label(root, text="Mot de passe:").pack(pady=5)
-entry_password = tk.Entry(root, show="*")
+tk.Label(root, text="Mot de passe:", bg="#1E1E2E", fg="white").pack(pady=5)
+entry_password = tk.Entry(root, show="*", bg="#33334E", fg="white")
 entry_password.pack(pady=5)
 
-tk.Button(root, text="Connexion", command=check_login).pack(pady=20)
-tk.Button(root, text="Créer un compte", command=create_account).pack(pady=5)
+tk.Button(root, text="Connexion", command=check_login, bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(pady=20)
+tk.Button(root, text="Créer un compte", command=create_account, bg="#6A5ACD", fg="white", relief=tk.FLAT, bd=0, highlightthickness=0).pack(pady=5)
 
 # Lancement de la boucle principale de l'application
 root.mainloop()

@@ -5,17 +5,20 @@ Toutes les modifications notables à ce projet seront documentées dans ce fichi
 ## Déployé
 
 ### Ajouté
-- Possibilitée d'écouter des musiques
-- Téléchargement des musiques dans le fichier "C://users/{utilisateur}/exora"
-- Possibilitée de faire "play", "pause", "skip", "back"
+- Ajout d'un logo
 
 ### Corrigé
-- Son innaudible
+- Bouttons back, next et pause
+- Affichage des musique dans la playlist
 
 ### Changé
-- Ne passe plus par une base de donnée mais uniquement par fichier
+- UI du logiciel
 
-## [0.1.1] - 2025/02/03
+## [0.1.2] - 2025/02/03
 
 ### Ajouté
 - Initial release.
+
+### Suivant
+- [ ] Ajout du logo en fond
+- [ ] Modification du volume sonore
