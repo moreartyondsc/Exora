@@ -7,7 +7,7 @@ La sécurité est une priorité pour le projet Exora Music. Si vous découvrez u
 Pour signaler une vulnérabilité de sécurité, veuillez suivre ces étapes :
 
 1. **Vérifiez les Problèmes Existants** :
-   - Avant de signaler une nouvelle vulnérabilité, veuillez vérifier les [issues existantes](https://github.com/moreartydsc/exora/issues) pour vous assurer que la vulnérabilité n'a pas déjà été signalée.
+   - Avant de signaler une nouvelle vulnérabilité, veuillez vérifier les [https://github.com/moreartydsc/exora/issues](https://github.com/moreartyondsc/Exora/issues) pour vous assurer que la vulnérabilité n'a pas déjà été signalée.
 
 2. **Envoyez un E-mail** :
    - Envoyez un e-mail à [odevs.contact@gmail.com](mailto:odevs.contact@gmail.com) avec les détails de la vulnérabilité. Veuillez inclure autant d'informations que possible, y compris les étapes pour reproduire la vulnérabilité, les versions affectées, et tout autre détail pertinent.
