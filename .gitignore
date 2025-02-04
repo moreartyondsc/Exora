@@ -1,1 +1,9 @@
 config.json
+music_player.ui
+dev.py
+music_player.py
+__pycache_/*
+__pycache__
+.github/ISSUE_TEMPLATE/*
+.github/*
+.github

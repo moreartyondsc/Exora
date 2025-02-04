@@ -2,23 +2,27 @@
 
 Toutes les modifications notables à ce projet seront documentées dans ce fichier.
 
-## Déployé
+## [1.0.0] - 2025/02/04
 
 ### Ajouté
 - Ajout d'un logo
+- Ajout d'une barre de volume pour ajuster le volume sonore
+- Ajout d'un bouton pour accéder au dossier de stockage des musiques
+- Ajout d'un moyen de supprimer les chansons de la playlist
+- Ajout des crédits du créateur dans l'interface utilisateur
 
 ### Corrigé
-- Bouttons back, next et pause
-- Affichage des musique dans la playlist
+- Correction des boutons "Back", "Next" et "Pause"
+- Correction de l'affichage des musiques dans la playlist
 
 ### Changé
-- UI du logiciel
+- Amélioration de l'interface utilisateur
+- Amélioration de la gestion de la lecture des chansons
 
-## [0.1.2] - 2025/02/03
+## [1.0.0] - 2025/02/04
 
 ### Ajouté
 - Initial release.
 
 ### Suivant
-- [ ] Ajout du logo en fond
-- [ ] Modification du volume sonore
+- [ ] N/A
