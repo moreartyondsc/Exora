@@ -58,12 +58,17 @@ def download_youtube_song(youtube_url, playlist_listbox, playing_label):
             'preferredquality': '192',
         }]
     }
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info_dict = ydl.extract_info(youtube_url, download=True)
-        song_name = info_dict.get('title', None)
-        if song_name:
-            QMessageBox.information(None, "Ajout de son", "Son ajouté avec succès!")
-            show_playlist(playlist_listbox, playing_label)
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(youtube_url, download=True)
+            song_name = info_dict.get('title', None)
+            if song_name:
+                QMessageBox.information(None, "Ajout de son", "Son ajouté avec succès!")
+                show_playlist(playlist_listbox, playing_label)
+    except Exception as e:
+        QMessageBox.critical(None, "Erreur de téléchargement", f"Erreur lors du téléchargement: {e}")
+    finally:
+        download_thread = None
 
 # Fonction pour lancer le téléchargement en arrière-plan
 def start_download(youtube_url, playlist_listbox, playing_label):
