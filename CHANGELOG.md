@@ -2,6 +2,11 @@
 
 Toutes les modifications notables à ce projet seront documentées dans ce fichier.
 
+## [1.0.2] - N/A
+
+### Futurs ajouts
+- [ ] Possibilitée de définir la playlist en aléatoire
+
 ## [1.0.1] - 2025/02/05
 
 ### Ajouté
@@ -17,6 +22,3 @@ Toutes les modifications notables à ce projet seront documentées dans ce fichi
 
 ### Ajouté
 - Initial release.
-
-### Suivant
-- [ ] N/A
