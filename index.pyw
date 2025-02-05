@@ -286,7 +286,7 @@ class MusicPlayerApp(QMainWindow):
         main_layout.addWidget(self.playing_label)
 
         # Crédits
-        credits_label = QLabel("Créé par [Votre Nom]")
+        credits_label = QLabel("Créé par Morearty")
         credits_label.setStyleSheet("font-size: 12px; color: white; margin-top: 20px; text-align: center;")
         credits_label.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(credits_label)
