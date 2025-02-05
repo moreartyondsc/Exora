@@ -5,7 +5,7 @@ import threading
 import pygame
 import subprocess
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QMenu, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QLineEdit, QListWidget, QSlider, QWidget
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QObject
 from PyQt5.QtGui import QIcon
 
 # Initialisation de pygame
@@ -19,6 +19,13 @@ is_paused = False
 current_pos = 0
 download_thread = None  # Thread pour le téléchargement
 check_timer = None  # Timer pour vérifier la fin de la chanson
+
+# Classe pour gérer les signaux
+class SignalHandler(QObject):
+    download_finished = pyqtSignal()
+    download_error = pyqtSignal(str)
+
+signal_handler = SignalHandler()
 
 # Fonction pour obtenir le répertoire des fichiers audio
 def get_exora_directory():
@@ -63,10 +70,9 @@ def download_youtube_song(youtube_url, playlist_listbox, playing_label):
             info_dict = ydl.extract_info(youtube_url, download=True)
             song_name = info_dict.get('title', None)
             if song_name:
-                QMessageBox.information(None, "Ajout de son", "Son ajouté avec succès!")
-                show_playlist(playlist_listbox, playing_label)
+                signal_handler.download_finished.emit()
     except Exception as e:
-        QMessageBox.critical(None, "Erreur de téléchargement", f"Erreur lors du téléchargement: {e}")
+        signal_handler.download_error.emit(str(e))
     finally:
         download_thread = None
 
@@ -325,6 +331,10 @@ class MusicPlayerApp(QMainWindow):
 
         # Lier l'événement de sélection à la fonction play_selected_song
         self.playlist.itemClicked.connect(lambda: play_selected_song(self.playing_label, self.playlist))
+
+        # Connecter les signaux aux slots
+        signal_handler.download_finished.connect(lambda: show_playlist(self.playlist, self.playing_label))
+        signal_handler.download_error.connect(lambda error: QMessageBox.critical(None, "Erreur de téléchargement", f"Erreur lors du téléchargement: {error}"))
 
         # Afficher la playlist au démarrage
         show_playlist(self.playlist, self.playing_label)
