@@ -29,6 +29,3 @@ Toutes les modifications notables à ce projet seront documentées dans ce fichi
 
 ### Ajouté
 - Initial release.
-
-### Suivant
-- [ ] N/A
