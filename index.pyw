@@ -4,9 +4,15 @@ import yt_dlp
 import threading
 import pygame
 import subprocess
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QMenu, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QLineEdit, QListWidget, QSlider, QWidget
+from PyQt5.QtWidgets import (
+    QApplication, QMainWindow, QMessageBox, QFileDialog, QMenu,
+    QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QLineEdit,
+    QListWidget, QSlider, QWidget
+)
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QObject
 from PyQt5.QtGui import QIcon
+from mutagen.mp3 import MP3
+from mutagen import MutagenError
 
 # Initialisation de pygame
 pygame.mixer.init()
@@ -35,6 +41,14 @@ def get_exora_directory():
         os.makedirs(exora_dir)
     return exora_dir
 
+# Fonction pour vérifier si un fichier est un véritable MP3
+def is_valid_mp3(file_path):
+    try:
+        audio = MP3(file_path)
+        return True
+    except MutagenError:
+        return False
+
 # Fonction pour afficher la playlist dans la ListWidget
 def show_playlist(playlist_listbox, playing_label, search_query=""):
     global current_playlist
@@ -45,13 +59,39 @@ def show_playlist(playlist_listbox, playing_label, search_query=""):
     current_playlist = []
     for filename in os.listdir(exora_dir):
         if filename.endswith(".mp3"):
-            song_name = os.path.splitext(filename)[0]
             song_path = os.path.join(exora_dir, filename)
-            if search_query.lower() in song_name.lower() or not search_query:
-                current_playlist.append(song_path)
-                # Tronquer le nom de la chanson à 100 caractères
-                truncated_song_name = song_name[:100]
-                playlist_listbox.addItem(truncated_song_name)
+            if is_valid_mp3(song_path):
+                song_name = os.path.splitext(filename)[0]
+                if search_query.lower() in song_name.lower() or not search_query:
+                    current_playlist.append(song_path)
+                    # Tronquer le nom de la chanson à 100 caractères
+                    truncated_song_name = song_name[:100]
+                    playlist_listbox.addItem(truncated_song_name)
+            else:
+                handle_invalid_mp3(song_path, filename)
+
+# Fonction pour gérer les fichiers MP3 invalides
+def handle_invalid_mp3(song_path, filename):
+    msg_box = QMessageBox()
+    msg_box.setIcon(QMessageBox.Warning)
+    msg_box.setWindowTitle("Format non pris en charge")
+    msg_box.setText(f"Le fichier '{filename}' n'est pas un fichier MP3 valide.")
+    msg_box.setInformativeText("Que souhaitez-vous faire ?")
+
+    # Ajouter des boutons personnalisés
+    delete_button = msg_box.addButton("Supprimer", QMessageBox.DestructiveRole)
+    open_folder_button = msg_box.addButton("Accéder au dossier", QMessageBox.ActionRole)
+    ignore_button = msg_box.addButton("Ignorer", QMessageBox.RejectRole)
+
+    msg_box.exec_()
+
+    if msg_box.clickedButton() == delete_button:
+        os.remove(song_path)
+        QMessageBox.information(None, "Suppression", f"Le fichier '{filename}' a été supprimé.")
+    elif msg_box.clickedButton() == open_folder_button:
+        open_music_folder()
+    elif msg_box.clickedButton() == ignore_button:
+        pass  # Ignorer et ne rien faire
 
 # Fonction pour télécharger une chanson depuis un lien YouTube en arrière-plan
 def download_youtube_song(youtube_url, playlist_listbox, playing_label):
@@ -89,11 +129,14 @@ def start_download(youtube_url, playlist_listbox, playing_label):
 def play_song(playing_label, url=None):
     global current_index, play_thread, is_paused, current_pos, check_timer
 
-    def play_audio(url):
-        global is_paused, current_pos
-        pygame.mixer.music.load(url)
-        pygame.mixer.music.play(start=current_pos / 1000.0)
-        is_paused = False
+    try:
+        def play_audio(url):
+            global is_paused, current_pos
+            pygame.mixer.music.load(url)
+            pygame.mixer.music.play(start=current_pos / 1000.0)
+            is_paused = False
+    except Exception as e:
+        QMessageBox.critical(None, "Erreur de lecture", f"Erreur lors de la lecture de la chanson: {e}")
 
     if url:
         current_index = current_playlist.index(url)
